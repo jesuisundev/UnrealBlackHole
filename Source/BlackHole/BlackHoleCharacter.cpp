@@ -105,6 +105,15 @@ void ABlackHoleCharacter::BeginPlay()
 	}
 }
 
+void ABlackHoleCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (GEngine)
+		GEngine->ClearOnScreenDebugMessages();
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, isCarryingObjective ? "True" : "False");
+}
+
 //////////////////////////////////////////////////////////////////////////
 // Input
 

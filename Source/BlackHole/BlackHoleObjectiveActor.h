@@ -31,6 +31,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	void PlayEffects();
+	void PickUp(AActor* OtherActor);
 
 public:	
 	// Called every frame

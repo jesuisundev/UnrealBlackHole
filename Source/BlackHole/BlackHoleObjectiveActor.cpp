@@ -4,6 +4,7 @@
 #include "BlackHoleObjectiveActor.h"
 #include "Components/SphereComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "BlackHoleCharacter.h"
 
 // Sets default values
 ABlackHoleObjectiveActor::ABlackHoleObjectiveActor()
@@ -45,5 +46,18 @@ void ABlackHoleObjectiveActor::NotifyActorBeginOverlap(AActor* OtherActor)
 	Super::NotifyActorBeginOverlap(OtherActor);
 
 	PlayEffects();
+	PickUp(OtherActor);
 }
 
+
+void ABlackHoleObjectiveActor::PickUp(AActor* OtherActor)
+{
+	ABlackHoleCharacter* MyCharacter = Cast<ABlackHoleCharacter>(OtherActor);
+
+	if (MyCharacter)
+	{
+		MyCharacter->isCarryingObjective = true;
+
+		Destroy();
+	}
+}
