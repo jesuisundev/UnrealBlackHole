@@ -16,8 +16,15 @@ ABlackHoleGameMode::ABlackHoleGameMode()
 	HUDClass = ABlackHoleHUD::StaticClass();
 }
 
-void ABlackHoleGameMode::CompleteMission(bool &flagComplete)
+void ABlackHoleGameMode::CompleteMission(bool &flagComplete, APawn* InstigatorPawn)
 {
 	flagComplete = true;
 	UE_LOG(LogTemp, Log, TEXT("EXTRACTION DONE"));
+
+	if (InstigatorPawn)
+	{
+		InstigatorPawn->DisableInput(nullptr);
+	}
+
+	OnMissionCompleted(InstigatorPawn);
 }

@@ -14,7 +14,10 @@ class ABlackHoleGameMode : public AGameModeBase
 public:
 	ABlackHoleGameMode();
 
-	static void CompleteMission(bool &flagComplete);
+	void CompleteMission(bool &flagComplete, APawn* InstigatorPawn);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "GameMode")
+	void OnMissionCompleted(APawn* InstigatorPawn);
 };
 
 

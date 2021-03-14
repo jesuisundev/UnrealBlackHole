@@ -55,12 +55,25 @@ void AExtractionZone::HandleOverlap(UPrimitiveComponent* OverlappedComponent, AA
 		return;
 	}
 
-	ABlackHoleCharacter* MyCharacter = Cast<ABlackHoleCharacter>(OtherActor);
+	ABlackHoleCharacter* MyPawn = Cast<ABlackHoleCharacter>(OtherActor);
 
-	if (MyCharacter && MyCharacter->isCarryingObjective)
+	if (MyPawn == nullptr)
 	{
-		ABlackHoleGameMode::CompleteMission(isExtractionDone);
-		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), FireworkParticle, GetActorLocation());
+		return;
 	}
-	
+
+	if (MyPawn->isCarryingObjective) {
+		ABlackHoleGameMode* GM = Cast<ABlackHoleGameMode>(GetWorld()->GetAuthGameMode());
+
+		if (GM) {
+			UGameplayStatics::PlaySoundAtLocation(GetWorld(), ObjectiveSuccedSound, GetActorLocation());
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), FireworkParticle, GetActorLocation());
+			GM->CompleteMission(isExtractionDone, MyPawn);
+		}
+	}
+	else
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), ObjectiveMissingSound, GetActorLocation());
+		UE_LOG(LogTemp, Log, TEXT("Objective missing"));
+	}
 }
