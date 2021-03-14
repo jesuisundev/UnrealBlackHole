@@ -13,6 +13,8 @@ class ABlackHoleGameMode : public AGameModeBase
 
 public:
 	ABlackHoleGameMode();
+
+	static void CompleteMission(bool &flagComplete);
 };
 
 

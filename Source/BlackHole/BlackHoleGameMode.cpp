@@ -15,3 +15,9 @@ ABlackHoleGameMode::ABlackHoleGameMode()
 	// use our custom HUD class
 	HUDClass = ABlackHoleHUD::StaticClass();
 }
+
+void ABlackHoleGameMode::CompleteMission(bool &flagComplete)
+{
+	flagComplete = true;
+	UE_LOG(LogTemp, Log, TEXT("EXTRACTION DONE"));
+}

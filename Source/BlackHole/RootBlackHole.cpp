@@ -40,7 +40,7 @@ void ARootBlackHole::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	TArray<UPrimitiveComponent*> OutOverlappingComponents{};
-	forceOnComponent = forceOnComponent - 2000;
+	forceOnComponent = forceOnComponent - 3000;
 	SphereComp->GetOverlappingComponents(OutOverlappingComponents);
 
 	for (UPrimitiveComponent* OutOverlappingComponent : OutOverlappingComponents)
