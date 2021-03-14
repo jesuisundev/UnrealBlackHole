@@ -4,6 +4,7 @@
 #include "BlackHoleHUD.h"
 #include "BlackHoleCharacter.h"
 #include "UObject/ConstructorHelpers.h"
+#include "Kismet/GameplayStatics.h"
 
 ABlackHoleGameMode::ABlackHoleGameMode()
 	: Super()
@@ -24,7 +25,26 @@ void ABlackHoleGameMode::CompleteMission(bool &flagComplete, APawn* InstigatorPa
 	if (InstigatorPawn)
 	{
 		InstigatorPawn->DisableInput(nullptr);
+
+		TArray<AActor*> ReturnedActors;
+		UGameplayStatics::GetAllActorsOfClass(this, SpectatingViewpointClass, ReturnedActors);
+
+		AActor* NewViewTarget = nullptr;
+		if (ReturnedActors.Num() > 0)
+		{
+			NewViewTarget = ReturnedActors[0];
+		}
+
+		APlayerController* PC = Cast<APlayerController>(InstigatorPawn->GetController());
+
+		if (PC)
+		{
+			PC->SetViewTargetWithBlend(NewViewTarget, 0.5f, EViewTargetBlendFunction::VTBlend_Cubic);
+		}
 	}
 
+	// Blueprint Logic Function
 	OnMissionCompleted(InstigatorPawn);
+
+	
 }
