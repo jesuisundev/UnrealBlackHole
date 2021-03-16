@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "Components/PawnNoiseEmitterComponent.h"
 #include "GameFramework/InputSettings.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -82,6 +83,9 @@ ABlackHoleCharacter::ABlackHoleCharacter()
 
 	// Uncomment the following line to turn motion controllers on by default:
 	//bUsingMotionControllers = true;
+
+	m_PawnNoiseEmitterComponent = CreateDefaultSubobject<UPawnNoiseEmitterComponent>(TEXT("m_PawnNoiseEmitterComponent"));
+	//m_PawnNoiseEmitterComponent->Activate(true);
 }
 
 void ABlackHoleCharacter::BeginPlay()
@@ -170,6 +174,7 @@ void ABlackHoleCharacter::OnFire()
 				//Set Spawn Collision Handling Override
 				FActorSpawnParameters ActorSpawnParams;
 				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+				ActorSpawnParams.Instigator = this;
 
 				// spawn the projectile at the muzzle
 				World->SpawnActor<ABlackHoleProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);

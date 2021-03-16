@@ -9,6 +9,7 @@
 class USphereComponent;
 class UProjectileMovementComponent;
 class UParticleSystem;
+class UPawnNoiseEmitterComponent;
 
 UCLASS(config=Game)
 class ABlackHoleProjectile : public AActor
@@ -25,6 +26,9 @@ class ABlackHoleProjectile : public AActor
 
 	UPROPERTY(EditDefaultsOnly, Category = "FX");
 	UParticleSystem* ExplosionParticle;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
+	UPawnNoiseEmitterComponent* m_PawnNoiseEmitterComponent;
 
 public:
 	ABlackHoleProjectile();
