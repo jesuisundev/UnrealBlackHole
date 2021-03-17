@@ -19,10 +19,11 @@ protected:
 public:
 	ABlackHoleGameMode();
 
-	void CompleteMission(bool &flagComplete, APawn* InstigatorPawn);
+	void CompleteMission(bool& flagComplete, APawn* InstigatorPawn, bool isSuccess = true);
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "GameMode")
-	void OnMissionCompleted(APawn* InstigatorPawn);
+	void OnMissionCompleted(APawn* InstigatorPawn, bool bMissionSuccess);
+
 };
 
 

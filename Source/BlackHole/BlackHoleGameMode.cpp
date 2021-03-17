@@ -17,7 +17,7 @@ ABlackHoleGameMode::ABlackHoleGameMode()
 	HUDClass = ABlackHoleHUD::StaticClass();
 }
 
-void ABlackHoleGameMode::CompleteMission(bool &flagComplete, APawn* InstigatorPawn)
+void ABlackHoleGameMode::CompleteMission(bool &flagComplete, APawn* InstigatorPawn, bool isSuccess)
 {
 	flagComplete = true;
 	UE_LOG(LogTemp, Log, TEXT("EXTRACTION DONE"));
@@ -44,7 +44,5 @@ void ABlackHoleGameMode::CompleteMission(bool &flagComplete, APawn* InstigatorPa
 	}
 
 	// Blueprint Logic Function
-	OnMissionCompleted(InstigatorPawn);
-
-	
+	OnMissionCompleted(InstigatorPawn, isSuccess);
 }
