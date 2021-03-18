@@ -5,6 +5,9 @@
 #include "Perception/PawnSensingComponent.h"
 #include "DrawDebugHelpers.h"
 #include "BlackHole/BlackHoleGameMode.h"
+#include "Runtime/AIModule/Classes/AIController.h"
+#include "Kismet/GameplayStatics.h"
+#include "Runtime/AIModule/Classes/Blueprint/AIBlueprintHelperLibrary.h"
 
 // Sets default values
 AAIGuard::AAIGuard()
@@ -26,6 +29,8 @@ void AAIGuard::BeginPlay()
 	Super::BeginPlay();
 	
 	OriginalRotation = GetActorRotation();
+
+	StartPatrol();
 }
 
 void AAIGuard::SetGuardState(EAIState NewState)
@@ -38,6 +43,43 @@ void AAIGuard::SetGuardState(EAIState NewState)
 	GuardState = NewState;
 
 	OnStateChange(GuardState);
+}
+
+void AAIGuard::StartPatrol()
+{
+	UE_LOG(LogTemp, Log, TEXT("StartPatrol"));
+	AActor* FirstTargetPoint = nullptr;
+	TArray<AActor*> ReturnedActors;
+	UGameplayStatics::GetAllActorsOfClass(this, FirstTargetClass, ReturnedActors);
+
+	if (ReturnedActors.Num() > 0)
+	{
+		FirstTargetPoint = ReturnedActors[0];
+	}
+
+	if (&FirstTargetPoint == nullptr) {
+		return;
+	}
+
+	UAIBlueprintHelperLibrary::SimpleMoveToActor(GetController(), FirstTargetPoint);
+}
+
+void AAIGuard::GetFirstTargetPoint(AActor* FirstTargetPoint)
+{
+	UE_LOG(LogTemp, Log, TEXT("GetFirstTargetPoint"));
+
+	TArray<AActor*> ReturnedActors;
+	UGameplayStatics::GetAllActorsOfClass(this, FirstTargetClass, ReturnedActors);
+
+	if (ReturnedActors.Num() > 0)
+	{
+		UE_LOG(LogTemp, Log, TEXT("ReturnedActors.Num(): %d"), ReturnedActors.Num());
+		UE_LOG(LogTemp, Log, TEXT("SET FirstTargetPoint"));
+		UE_LOG(LogTemp, Log, TEXT("SET FirstTargetPoint : %s"), *(ReturnedActors[0]->GetName()));
+		UE_LOG(LogTemp, Log, TEXT("SET FirstTargetPoint : %s"), *(ReturnedActors[0]->GetFullName()));
+
+		FirstTargetPoint = ReturnedActors[0];
+	}
 }
 
 // Called every frame

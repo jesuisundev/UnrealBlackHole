@@ -34,6 +34,8 @@ protected:
 	UPROPERTY(EditAnywhere, Category="Sensor")
 	UPawnSensingComponent* PawnSensingComp;
 
+	UPROPERTY(EditDefaultsOnly, Category = "TargetPoint")
+	TSubclassOf<AActor> FirstTargetClass;
 
 	// we need that otherwise the code will not be able to bind this to the event via adddynamic
 	UFUNCTION()
@@ -55,6 +57,10 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "AI")
 	void OnStateChange(EAIState NewState);
+
+	void StartPatrol();
+
+	void GetFirstTargetPoint(AActor* FirstTargetPoint);
 
 public:	
 	// Called every frame
